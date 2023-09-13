@@ -66,9 +66,39 @@ function addToCart(index) {
 //---------------------------------------->FIN<----------------------------------------
 
 //CODIGO PARA CUMPLIMIENTO DE REQUISITOS DE PRE ENTREGA
-//INICIO
+//INICIO CODIGO PARA CUMPLIMIENTO DE REQUISITOS DE PRE ENTREGA
+
+//-->CREACION DE CLASES<--
+class Producto {
+    constructor(title, description, price) {
+        this.title = title;
+        this.description = description;
+        this.price = price;
+    }
+}
+
+//-->CREACION DE VARIABLES<--
+// Llamar a la función cargarCatalogo para obtener el catálogo de productos
+const catalogoDeProductos = cargarCatalogo();
 
 //-->CREACION DE FUNCIONES<--
+// Definir la función cargarCatalogo
+function cargarCatalogo() {
+    const catalogo = [];
+
+    // Recorrer el arreglo products y crear instancias de Producto
+    products.forEach((product) => {
+        const producto = new Producto(
+            product.title,
+            product.description,
+            product.price
+        );
+        catalogo.push(producto);
+    });
+
+    return catalogo;
+}
+
 function finalizarCompra() {
     ////-->USO DE FUNCIONES DECLARADAS POSTERIORMENTE <--
     const totalCompra = calcularTotalCompra();
@@ -197,6 +227,8 @@ function obtenerCantidadCuotas(medioPagoSeleccionado) {
     return parseInt(partes[3].replace("(", ""));    
 }
 
+//FIN CODIGO PARA CUMPLIMIENTO DE REQUISITOS DE PRE ENTREGA
+
 // Esperar a que el documento esté completamente cargado
 document.addEventListener("DOMContentLoaded", function() {
     // Obtener referencia al botón
@@ -205,5 +237,3 @@ document.addEventListener("DOMContentLoaded", function() {
     // Agregar evento de clic al botón
     finalizarCompraBtn.addEventListener("click", finalizarCompra);
 });
-
-//FIN

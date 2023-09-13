@@ -75,6 +75,11 @@ class Producto {
         this.description = description;
         this.price = price;
     }
+
+    // Método para obtener la información del producto
+    mostrarInfo() {
+        return `Título: ${this.title}\nDescripción: ${this.description}\nPrecio: $${this.price.toFixed(2)}\n`;
+    }
 }
 
 //-->CREACION DE VARIABLES<--
@@ -227,13 +232,139 @@ function obtenerCantidadCuotas(medioPagoSeleccionado) {
     return parseInt(partes[3].replace("(", ""));    
 }
 
+function menu(){
+    let salirMenu = false
+    do{
+        let opcionIngresada = parseInt(prompt(`Ingrese la opción deseada
+            1 - Consultar catálogo
+            2 - Consultar catálogo ordenado alfabeticamente por nombre
+            3 - Buscar por nombre
+            4 - Buscar por precio
+            5 - Listar productos de menor a mayor por precio
+            6 - Listar productos de mayor a mayor por precio            
+            0 - Salir del menu`))
+        switch(opcionIngresada){
+            case 1:
+                consultarCatalogo();
+                break;
+            case 2:
+                
+                break;
+            case 3:       
+                buscarPorNombre();
+                break;
+            case 4:
+                buscarPorPrecio();
+                break;
+            case 5:
+            
+            break
+            case 6:
+            
+                break;   
+            case 0:                
+                salirMenu = true
+                break;   
+            default:
+                console.log("Opción no válida, ingrese alguna presente en el menu")
+            break
+       }
+    } while(!salirMenu)
+}
+
+function consultarCatalogo() {
+    let mensaje = "Catálogo de Productos:\n\n";   
+
+    catalogoDeProductos.forEach((producto) => {
+        mensaje += producto.mostrarInfo(); // Llama al método getInfo del producto
+        mensaje += "\n";
+    });
+
+    alert(mensaje);
+}
+
+function buscarPorNombre() {
+    let textoBusqueda = "";
+
+    while (textoBusqueda.trim() === "") {
+        textoBusqueda = prompt("Ingrese el texto a buscar en el nombre de los productos:");
+
+        if (textoBusqueda === null) {
+            return; // El usuario canceló la búsqueda
+        }
+
+        if (textoBusqueda.trim() === "") {
+            alert("El texto de búsqueda no puede estar vacío. Por favor, ingrese un texto válido.");
+        }
+    }
+
+    // Filtrar los productos que contienen el texto en su nombre
+    const productosEncontrados = catalogoDeProductos.filter((producto) => {
+        return producto.title.toLowerCase().includes(textoBusqueda.toLowerCase());
+    });
+
+    if (productosEncontrados.length === 0) {
+        alert("No se encontraron productos con el texto especificado en el nombre.");
+    } else {
+        let mensaje = `Productos encontrados con "${textoBusqueda}":\n\n`;
+
+        productosEncontrados.forEach((producto) => {
+            mensaje += producto.mostrarInfo(); // Llama al método mostrarInfo del producto
+            mensaje += "\n";
+        });
+
+        alert(mensaje);
+    }
+}
+
+function buscarPorPrecio() {
+    let precioIngresado = null;
+
+    while (precioIngresado === null || isNaN(precioIngresado) || precioIngresado < 0) {
+        const precioTexto = prompt("Ingrese el precio mínimo para buscar productos:");
+
+        if (precioTexto === null) {
+            return; // El usuario canceló la búsqueda
+        }
+
+        precioIngresado = parseFloat(precioTexto);
+
+        if (isNaN(precioIngresado) || precioIngresado < 0) {
+            alert("El precio ingresado no es válido. Por favor, ingrese un valor numérico mayor o igual a cero.");
+        }
+    }
+
+    // Filtrar los productos cuyo precio sea igual o mayor al precio ingresado
+    const productosEncontrados = catalogoDeProductos.filter((producto) => {
+        return producto.price >= precioIngresado;
+    });
+
+    if (productosEncontrados.length === 0) {
+        alert(`No se encontraron productos con precio igual o mayor a $${precioIngresado.toFixed(2)}.`);
+    } else {
+        let mensaje = `Productos encontrados con precio igual o mayor a $${precioIngresado.toFixed(2)}:\n\n`;
+
+        productosEncontrados.forEach((producto) => {
+            mensaje += producto.mostrarInfo(); // Llama al método mostrarInfo del producto
+            mensaje += "\n";
+        });
+
+        alert(mensaje);
+    }
+}
+
+
 //FIN CODIGO PARA CUMPLIMIENTO DE REQUISITOS DE PRE ENTREGA
 
 // Esperar a que el documento esté completamente cargado
 document.addEventListener("DOMContentLoaded", function() {
-    // Obtener referencia al botón
+    // Obtener referencias a los botones
     const finalizarCompraBtn = document.getElementById("finalizarCompraBtn");
+    const masOpcionesBtn = document.getElementById("masOpcionesBtn");
 
-    // Agregar evento de clic al botón
+    // Agregar evento de clic al botón "Mas Opciones"
+    masOpcionesBtn.addEventListener("click", menu);
+
+    // Agregar evento de clic al botón "Finalizar Compra"
     finalizarCompraBtn.addEventListener("click", finalizarCompra);
 });

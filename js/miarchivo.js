@@ -78,7 +78,7 @@ class Producto {
 
     // Método para obtener la información del producto
     mostrarInfo() {
-        return `Título: ${this.title}\nDescripción: ${this.description}\nPrecio: $${this.price.toFixed(2)}\n`;
+        return `Nombre: ${this.title}\nDescripción: ${this.description}\nPrecio: $${this.price.toFixed(2)}\n`;
     }
 }
 
@@ -232,45 +232,49 @@ function obtenerCantidadCuotas(medioPagoSeleccionado) {
     return parseInt(partes[3].replace("(", ""));    
 }
 
-function menu(){
-    let salirMenu = false
-    do{
-        let opcionIngresada = parseInt(prompt(`Ingrese la opción deseada
+function menu() {
+    let salirMenu = false;
+    do {
+        let opcionIngresada = parseInt(prompt(`Ingrese el número de la opción deseada
             1 - Consultar catálogo
-            2 - Consultar catálogo ordenado alfabeticamente por nombre
+            2 - Consultar catálogo ordenado alfabéticamente por nombre
             3 - Buscar por nombre
             4 - Buscar por precio
             5 - Listar productos de menor a mayor por precio
-            6 - Listar productos de mayor a mayor por precio            
-            0 - Salir del menu`))
-        switch(opcionIngresada){
-            case 1:
-                consultarCatalogo();
-                break;
-            case 2:
-                consultarCatalogoAlfabeticamente();
-                break;
-            case 3:       
-                buscarPorNombre();
-                break;
-            case 4:
-                buscarPorPrecio();
-                break;
-            case 5:
-                listarProductosMenorMayorPrecio();
-            break
-            case 6:
-                listarProductosMayorMenorPrecio();
-                break;   
-            case 0:                
-                salirMenu = true
-                break;   
-            default:
-                console.log("Opción no válida, ingrese alguna presente en el menu")
-            break
-       }
-    } while(!salirMenu)
+            6 - Listar productos de mayor a menor por precio            
+            0 - Salir del menú`));
+
+        // Validar que la opción ingresada sea un número y esté dentro del rango válido
+        if (!isNaN(opcionIngresada) && opcionIngresada >= 0 && opcionIngresada <= 6) {
+            switch (opcionIngresada) {
+                case 1:
+                    consultarCatalogo();
+                    break;
+                case 2:
+                    consultarCatalogoAlfabeticamente();
+                    break;
+                case 3:
+                    buscarPorNombre();
+                    break;
+                case 4:
+                    buscarPorPrecio();
+                    break;
+                case 5:
+                    listarProductosMenorMayorPrecio();
+                    break;
+                case 6:
+                    listarProductosMayorMenorPrecio();
+                    break;
+                case 0:
+                    salirMenu = true;
+                    break;
+            }
+        } else {
+            alert("Opción no válida. Por favor, ingrese una opción válida del menú.");
+        }
+    } while (!salirMenu);
 }
+
 
 function consultarCatalogo() {
     let mensaje = "Catálogo de Productos:\n\n";   
@@ -321,7 +325,7 @@ function buscarPorPrecio() {
     let precioIngresado = null;
 
     while (precioIngresado === null || isNaN(precioIngresado) || precioIngresado < 0) {
-        const precioTexto = prompt("Ingrese el precio mínimo para buscar productos:");
+        const precioTexto = prompt("Ingrese el precio máximo a pagar para buscar productos:");
 
         if (precioTexto === null) {
             return; // El usuario canceló la búsqueda
@@ -336,13 +340,13 @@ function buscarPorPrecio() {
 
     // Filtrar los productos cuyo precio sea igual o mayor al precio ingresado
     const productosEncontrados = catalogoDeProductos.filter((producto) => {
-        return producto.price >= precioIngresado;
+        return producto.price <= precioIngresado;
     });
 
     if (productosEncontrados.length === 0) {
-        alert(`No se encontraron productos con precio igual o mayor a $${precioIngresado.toFixed(2)}.`);
+        alert(`No se encontraron productos con precio igual o menor a $${precioIngresado.toFixed(2)}.`);
     } else {
-        let mensaje = `Productos encontrados con precio igual o mayor a $${precioIngresado.toFixed(2)}:\n\n`;
+        let mensaje = `Productos encontrados con precio igual o menor a $${precioIngresado.toFixed(2)}:\n\n`;
 
         productosEncontrados.forEach((producto) => {
             mensaje += producto.mostrarInfo(); // Llama al método mostrarInfo del producto

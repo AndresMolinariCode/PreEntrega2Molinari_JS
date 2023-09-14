@@ -16,5 +16,5 @@ Para utitlizar el botón "Más Opciones" se debe ir al menu "Suplementos-->Prote
 3 - Buscar por nombre
 4 - Buscar por precio
 5 - Listar productos de menor a mayor por precio
-6 - Listar productos de mayor a mayor por precio            
+6 - Listar productos de mayor a menor por precio            
 0 - Salir del menu

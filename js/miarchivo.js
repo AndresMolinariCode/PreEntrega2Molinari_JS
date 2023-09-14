@@ -5,20 +5,20 @@ const products = [
   // Aquí se agregan los productos a ser listados  
   {
       image: '../img/Suplementos/WheyProtein/WheyProtein_1-removebg-preview.png',
-      title: 'Producto 1',
-      description: 'Descripción del Producto 1',
+      title: 'Iridium Whey Concentrado',
+      description: 'El concentrado es la proteína ideal para el día a día. De alto valor biológico, es el complemento más importante para quienes buscan aumentar la fuerza y ​​ganar masa muscular.',
       price: 19.99
   },
   {
       image: '../img/Suplementos/WheyProtein/WheyProtein_2-removebg-preview.png',
-      title: 'Producto 2',
-      description: 'Descripción del Producto 2',
+      title: 'Universal Ultra Whey Pro',
+      description: 'Sirve para aumentar tu masa muscular. Para crecer es necesario entrenar con sobrecarga, levantar pesas, de esa manera las fibras musculares se dañan durante el entrenamiento y al reestructurase durante el descanso aumentan su tamaño.',
       price: 24.99
   },
   {
       image: '../img/Suplementos/WheyProtein/WheyProtein_3-removebg-preview.png',
-      title: 'Producto 3',
-      description: 'Descripción del Producto 3',
+      title: 'Integralmedica Whey Protein Isolate',
+      description: 'Promueve el aumento de masa muscular a través del incremento de síntesis proteica. Mantiene balance positivo de nitrógeno, evitando la degradación de músculo.',
       price: 29.99
   },  
 ];
@@ -248,7 +248,7 @@ function menu(){
                 consultarCatalogo();
                 break;
             case 2:
-                
+                consultarCatalogoAlfabeticamente();
                 break;
             case 3:       
                 buscarPorNombre();
@@ -257,10 +257,10 @@ function menu(){
                 buscarPorPrecio();
                 break;
             case 5:
-            
+                listarProductosMenorMayorPrecio();
             break
             case 6:
-            
+                listarProductosMayorMenorPrecio();
                 break;   
             case 0:                
                 salirMenu = true
@@ -353,7 +353,56 @@ function buscarPorPrecio() {
     }
 }
 
+function consultarCatalogoAlfabeticamente() {
+    // Copia el catálogo de productos para no modificar el original
+    const catalogoOrdenado = [...catalogoDeProductos];
 
+    // Ordena el catálogo alfabéticamente por el campo title
+    catalogoOrdenado.sort((a, b) => a.title.localeCompare(b.title));
+
+    let mensaje = "Catálogo de Productos (Ordenado Alfabéticamente):\n\n";
+
+    catalogoOrdenado.forEach((producto) => {
+        mensaje += producto.mostrarInfo(); // Llama al método mostrarInfo del producto
+        mensaje += "\n";
+    });
+
+    alert(mensaje);
+}
+
+function listarProductosMenorMayorPrecio() {
+    // Copia el catálogo de productos para no modificar el original
+    const catalogoOrdenado = [...catalogoDeProductos];
+
+    // Ordena el catálogo por precio de menor a mayor
+    catalogoOrdenado.sort((a, b) => a.price - b.price);
+
+    let mensaje = "Catálogo de Productos (Ordenado por Precio de Menor a Mayor):\n\n";
+
+    catalogoOrdenado.forEach((producto) => {
+        mensaje += producto.mostrarInfo(); // Llama al método mostrarInfo del producto
+        mensaje += "\n";
+    });
+
+    alert(mensaje);
+}
+
+function listarProductosMayorMenorPrecio() {
+    // Copia el catálogo de productos para no modificar el original
+    const catalogoOrdenado = [...catalogoDeProductos];
+
+    // Ordena el catálogo por precio de mayor a menor
+    catalogoOrdenado.sort((a, b) => b.price - a.price);
+
+    let mensaje = "Catálogo de Productos (Ordenado por Precio de Mayor a Menor):\n\n";
+
+    catalogoOrdenado.forEach((producto) => {
+        mensaje += producto.mostrarInfo(); // Llama al método mostrarInfo del producto
+        mensaje += "\n";
+    });
+
+    alert(mensaje);
+}
 //FIN CODIGO PARA CUMPLIMIENTO DE REQUISITOS DE PRE ENTREGA
 
 // Esperar a que el documento esté completamente cargado
